@@ -10,6 +10,9 @@
 
 <body>
 
+  <label for="apikey">API Key:</label>
+  <input id="apikey" name="apikey" type="text" maxlength="50" size="24"/>
+
   <p>Upload a ship photo to learn what type of ship. Find out information about these kinds of ships.</p>
   <input id="photo" type="file" class="btn btn-primary btn-lg">
   <div id="results">
@@ -34,7 +37,8 @@
     
     const moreButton = document.getElementById('getInfo');
     moreButton.addEventListener('click', askOpenAI);
-  
+    const auth = "Bearer " + document.getElementById('apikey').value;
+
     async function askOpenAI() {
             const openAIResponse = await fetch('https://api.openai.com/v1/completions', {
               method: "POST",
@@ -46,10 +50,10 @@
                                       "frequency_penalty": 0,
                                       "presence_penalty": 0
                                     }),
-              headers: { "Content-Type": "application/json", "Authorization" : "Bearer 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" }
+              headers: { "Content-Type": "application/json", "Authorization" : auth }
       });
       
-      moreShipTypeInfo.innerHtml = `<p>${openAIResponse}</p>
+      moreShipTypeInfo.innerHtml = `<p>${openAIResponse}</p>`
       
     }
     
